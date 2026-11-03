@@ -24,38 +24,10 @@ MaPinte est une application web développée avec Vue.js 3 permettant de découv
 - Open Brewery DB API
 - HTML / CSS / JavaScript
 
-## Organisation Git
+## Membre
+- Eyuel Worku
+- Taveeporn Matta
+- Amin Torrisi
+- Farah Mohamed Ahmed
 
-### Branches principales
 
-- `main` : version stable du projet
-- `dev` : branche de développement
-
-### Convention de nommage
-
-#### Branches
-
-- `feature/nom-fonctionnalite`
-- `fix/nom-correction`
-- `docs/nom-documentation`
-
-Exemples :
-
-- `feature/search-bar`
-- `feature/favorites`
-- `feature/brewery-details`
-
-#### Commits
-
-- `feat: description`
-- `fix: description`
-- `docs: description`
-- `style: description`
-
-Exemples :
-
-```txt
-feat: add search bar
-feat: create brewery details page
-fix: correct routing issue
-docs: update README
