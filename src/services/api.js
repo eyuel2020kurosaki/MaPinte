@@ -10,9 +10,10 @@ const api = axios.create({
 /**
  * Récupère une brasserie par son identifiant.
  * @param {string} id
+ * @param {import('axios').AxiosRequestConfig} [config] options axios (ex. { signal } pour annuler)
  */
-export async function getBreweryById(id) {
-  const { data } = await api.get(`/${encodeURIComponent(id)}`)
+export async function getBreweryById(id, config) {
+  const { data } = await api.get(`/${encodeURIComponent(id)}`, config)
   return data
 }
 

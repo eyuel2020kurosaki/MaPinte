@@ -77,7 +77,19 @@ Ce projet est réalisé dans le cadre du module Frontend (CPNV - Filière Inform
 | --------------- | ----------------------- | ------------------------------------------- |
 | `/`             | `HomeView.vue`          | Page d'accueil                              |
 | `/brewery/:id`  | `BreweryDetailView.vue` | Détail d'une brasserie (`:id` passé en prop) |
+| `/a-propos`     | `AboutView.vue`         | Présentation du projet et de l'équipe       |
 | autre           | `NotFoundView.vue`      | Page 404                                    |
+
+## Design
+
+Style inspiré des Human Interface Guidelines d'Apple : police système (SF Pro sur Mac/iPhone,
+Segoe UI Variable sur Windows), beaucoup d'espace, barre de navigation translucide, surfaces sans
+bordure et une seule couleur d'accent (ambre). Mode sombre automatique.
+
+Toutes les couleurs, rayons et espacements sont des variables CSS dans `src/assets/main.css`
+(`--text`, `--text-secondary`, `--bg-secondary`, `--accent`, `--radius`…). Utilisez-les dans vos
+composants plutôt que des valeurs en dur. Classes utilitaires : `.container`, `.btn`, `.btn--tinted`,
+`.link-chevron`, `.visually-hidden`.
 
 ## Structure
 
@@ -85,7 +97,7 @@ Ce projet est réalisé dans le cadre du module Frontend (CPNV - Filière Inform
 src/
 ├── assets/main.css         # Styles globaux et variables de couleur
 ├── components/
-│   ├── Navbar.vue          # En-tête avec logo cliquable
+│   ├── Navbar.vue          # Barre de navigation (logo cliquable, liens)
 │   └── Footer.vue          # Pied de page avec crédits
 ├── router/index.js         # Déclaration des routes
 ├── services/api.js         # Client Axios pour Open Brewery DB

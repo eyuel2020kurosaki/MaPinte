@@ -4,15 +4,18 @@ import { RouterLink } from 'vue-router'
 
 <template>
   <section class="container not-found">
-    <h1>Page introuvable</h1>
-    <p>Cette page n'existe pas ou a été déplacée.</p>
-    <RouterLink to="/" class="btn">Retour à l'accueil</RouterLink>
+    <p class="eyebrow">Erreur 404</p>
+    <h1 class="headline">Cette page est introuvable.</h1>
+    <p class="lead">Elle n'existe pas ou a été déplacée.</p>
+    <div class="actions">
+      <RouterLink to="/" class="btn">Retour au catalogue</RouterLink>
+    </div>
   </section>
 </template>
 
 <style scoped>
 .not-found {
-  padding-block: 64px;
+  padding-block: clamp(72px, 14vw, 140px);
   text-align: center;
 }
 </style>

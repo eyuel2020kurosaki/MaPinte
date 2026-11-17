@@ -1,16 +1,73 @@
-:root {
-  --color-primary: #e8a33d;
-  --color-primary-dark: #b87518;
-  --color-dark: #2b1b10;
-  --color-text: #2b1b10;
-  --color-muted: #6f5a48;
-  --color-bg: #fff8ec;
-  --color-surface: #ffffff;
-  --color-border: #ecdcc3;
+/*
+ * Système de design MaPinte
+ * Inspiré des Human Interface Guidelines d'Apple : police système, beaucoup d'espace,
+ * surfaces sans bordure, une seule couleur d'accent.
+ * Toutes les couleurs de texte respectent un contraste WCAG AA (>= 4.5:1).
+ */
 
-  --radius: 12px;
-  --container: 1100px;
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+:root {
+  color-scheme: light dark;
+
+  /* Surfaces */
+  --bg: #ffffff;
+  --bg-secondary: #f5f5f7;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --nav-bg: rgb(255 255 255 / 0.72);
+
+  /* Texte */
+  --text: #1d1d1f;
+  --text-secondary: #6e6e73;
+
+  /* Accent (ambre bière) */
+  --accent: #a85300;
+  --accent-hover: #8c4500;
+  --accent-contrast: #ffffff;
+  --accent-soft: #fdf1e3;
+  --accent-soft-hover: #f9e3c8;
+
+  /* Lignes et ombres */
+  --separator: rgb(0 0 0 / 0.1);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
+
+  /* Typographie : police système (SF Pro sur Apple, Segoe UI Variable sur Windows) */
+  --font:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI',
+    'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-display:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI Variable Display', 'Segoe UI',
+    'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  /* Formes et rythme */
+  --radius-sm: 10px;
+  --radius: 18px;
+  --radius-pill: 980px;
+  --container: 980px;
+  --gutter: 22px;
+  --nav-height: 52px;
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --bg-secondary: #101012;
+    --surface: #1c1c1e;
+    --surface-raised: #2c2c2e;
+    --nav-bg: rgb(22 22 23 / 0.72);
+
+    --text: #f5f5f7;
+    --text-secondary: #a1a1a6;
+
+    --accent: #ffb340;
+    --accent-hover: #ffc56b;
+    --accent-contrast: #000000;
+    --accent-soft: #2e2213;
+    --accent-soft-hover: #3d2c16;
+
+    --separator: rgb(255 255 255 / 0.12);
+    --shadow-card: none;
+  }
 }
 
 *,
@@ -21,26 +78,47 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* La barre de navigation collante ne masque jamais l'élément ciblé ou focalisé */
+  scroll-padding-top: calc(var(--nav-height) + 12px);
+  scroll-padding-bottom: 12px;
 }
 
 body {
   margin: 0;
-  font-family: var(--font-sans);
-  line-height: 1.6;
-  color: var(--color-text);
-  background: var(--color-bg);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.022em;
+  color: var(--text);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
 h2,
 h3 {
-  line-height: 1.2;
-  margin: 0 0 0.5em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
 }
 
 a {
-  color: var(--color-primary-dark);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 img,
@@ -50,36 +128,118 @@ svg {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-primary);
-  outline-offset: 2px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .container {
   width: 100%;
-  max-width: var(--container);
+  max-width: calc(var(--container) + var(--gutter) * 2);
   margin-inline: auto;
-  padding-inline: 16px;
+  padding-inline: var(--gutter);
 }
 
+/* Bouton pilule, style Apple */
 .btn {
-  display: inline-block;
-  padding: 0.6em 1.2em;
-  border-radius: 999px;
-  background: var(--color-primary);
-  color: var(--color-dark);
-  font-weight: 600;
-  text-decoration: none;
-  transition: background-color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font: inherit;
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease);
 }
 
 .btn:hover {
-  background: var(--color-primary-dark);
-  color: #fff;
+  background: var(--accent-hover);
+  text-decoration: none;
+}
+
+/* Bouton teinté (style iOS) : fond ambre très clair, texte ambre */
+.btn--tinted {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.btn--tinted:hover {
+  background: var(--accent-soft-hover);
+}
+
+/* Échelle typographique commune à toutes les pages */
+.eyebrow {
+  color: var(--accent);
+  font-size: clamp(17px, 1.6vw, 19px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.headline {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+.headline--hero {
+  font-size: clamp(40px, 7.5vw, 80px);
+}
+
+.lead {
+  margin-top: 16px;
+  color: var(--text-secondary);
+  font-size: clamp(19px, 2.2vw, 24px);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.actions {
+  margin-top: 32px;
+}
+
+/* Lien avec chevron, style Apple ("En savoir plus >") */
+.link-chevron::after {
+  content: '\203A';
+  display: inline-block;
+  margin-left: 4px;
+  transition: transform 0.2s var(--ease);
+}
+
+.link-chevron:hover::after {
+  transform: translateX(2px);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 734px) {
+  :root {
+    --gutter: 16px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    animation: none !important;
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

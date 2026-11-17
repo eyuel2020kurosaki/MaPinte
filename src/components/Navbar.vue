@@ -1,36 +1,40 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+
+const links = [
+  { to: '/', label: 'Catalogue' },
+  { to: '/a-propos', label: 'À propos' },
+]
 </script>
 
 <template>
   <header class="navbar">
     <nav class="container navbar__inner" aria-label="Navigation principale">
-      <RouterLink to="/" class="navbar__logo" aria-label="MaPinte - retour à l'accueil">
+      <RouterLink to="/" class="navbar__brand" aria-label="MaPinte, retour à l'accueil">
         <svg
-          class="navbar__icon"
-          viewBox="0 0 32 32"
-          width="32"
-          height="32"
+          class="navbar__glass"
+          viewBox="0 0 20 24"
+          width="16"
+          height="19"
           aria-hidden="true"
           focusable="false"
         >
-          <path d="M6 9h16v17a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9z" fill="#e8a33d" />
           <path
-            d="M5 8.5C5 5.5 7.5 4 10 4.5 11 3 13.5 2.5 15 3.5 16.5 2.5 19.5 3 20.5 5 23 5 24 7 23 8.5 22 10 6 10 5 8.5z"
-            fill="#fff8ec"
-          />
-          <path
-            d="M22 12h3a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3h-3"
+            d="M3 2h14l-1.6 18.2A2 2 0 0 1 13.4 22H6.6a2 2 0 0 1-2-1.8L3 2z"
             fill="none"
-            stroke="#e8a33d"
-            stroke-width="2.5"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linejoin="round"
           />
+          <path d="M4.2 8h11.6l-1 12H5.2l-1-12z" fill="var(--accent)" />
         </svg>
-        <span>Ma<strong>Pinte</strong></span>
+        <span>MaPinte</span>
       </RouterLink>
 
       <ul class="navbar__links">
-        <li><RouterLink to="/">Accueil</RouterLink></li>
+        <li v-for="link in links" :key="link.to">
+          <RouterLink :to="link.to" class="navbar__link">{{ link.label }}</RouterLink>
+        </li>
       </ul>
     </nav>
   </header>
@@ -40,55 +44,68 @@ import { RouterLink } from 'vue-router'
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 10;
-  background: var(--color-dark);
-  color: var(--color-bg);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
+  z-index: 100;
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--separator);
 }
 
 .navbar__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 64px;
-  gap: 16px;
+  height: var(--nav-height);
 }
 
-.navbar__logo {
-  display: flex;
+.navbar__brand {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1.4rem;
-  color: var(--color-bg);
+  gap: 8px;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.navbar__brand:hover {
   text-decoration: none;
-}
-
-.navbar__logo strong {
-  color: var(--color-primary);
-}
-
-.navbar__icon {
-  flex-shrink: 0;
 }
 
 .navbar__links {
   display: flex;
-  gap: 20px;
-  margin: 0;
+  gap: 4px;
+  /* Compense le padding du dernier lien : le texte s'aligne sur le bord du conteneur */
+  margin: 0 -12px 0 0;
   padding: 0;
   list-style: none;
 }
 
-.navbar__links a {
-  color: var(--color-bg);
-  text-decoration: none;
-  font-weight: 500;
-  padding-block: 4px;
-  border-bottom: 2px solid transparent;
+.navbar__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  transition: color 0.2s var(--ease);
 }
 
-.navbar__links a:hover,
-.navbar__links a.router-link-exact-active {
-  border-bottom-color: var(--color-primary);
+.navbar__link:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.navbar__link.router-link-exact-active {
+  color: var(--text);
+  font-weight: 500;
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .navbar {
+    background: var(--bg);
+  }
 }
 </style>
