@@ -24,6 +24,13 @@ export default defineConfig([
   js.configs.recommended,
   ...pluginVue.configs['flat/essential'],
 
+  {
+    rules: {
+      // Noms imposés par le backlog (tâche 9 : Navbar.vue et Footer.vue)
+      'vue/multi-word-component-names': ['error', { ignores: ['Navbar', 'Footer'] }],
+    },
+  },
+
   ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
 
   skipFormatting,
