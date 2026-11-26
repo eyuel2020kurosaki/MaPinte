@@ -115,8 +115,8 @@ Exemple :
 | --------------------------- | ---------------------------------------------------------- |
 | Liste paginée               | `api.get('/', { params: { page, per_page } })`             |
 | Recherche                   | `api.get('/search', { params: { query } })`                |
-| Une brasserie par id        | `api.get(\`/${id}\`)`                                      |
-| Les plus proches d'un point | `api.get('/', { params: { by_dist: \`${lat},${lng}\` } })` |
+| Une brasserie par id        | ``api.get(`/${id}`)``                                      |
+| Les plus proches d'un point | ``api.get('/', { params: { by_dist: `${lat},${lng}` } })`` |
 | Filtres                     | `by_type`, `by_country`, `by_city`, `sort`                 |
 
 Champs utiles d'une brasserie : `id`, `name`, `brewery_type`, `address_1`, `postal_code`, `city`,

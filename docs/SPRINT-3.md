@@ -38,7 +38,7 @@ Tests d'acceptation (iceScrum) :
 Déjà fait :
 
 - `/` (`home`) et `/about` (`about`, chargée à la demande) existent dans `src/router/index.js`.
-- Le bouton VOIR de `BreweryCard.vue` est déjà un `<RouterLink :to="`/brewery/${brewery.id}`">`.
+- Le bouton VOIR de `BreweryCard.vue` est déjà un ``<RouterLink :to="`/brewery/${brewery.id}`">``.
 - `Navbar.vue` met déjà la classe `is-active` sur le lien courant (`exact-active-class` pour Catalogue).
 
 À faire dans `src/router/index.js` :
@@ -104,13 +104,13 @@ Tests d'acceptation :
    - template : `<Loader v-if>` → `<ErrorBanner v-else-if="error" @retry="load">` → la fiche
    - erreur 404 : `catch (e)` puis `e.response?.status === 404` → message « Cette brasserie n'existe
      pas » ; sinon message réseau habituel
-   - téléphone : `<a :href="`tel:${brewery.phone}`">`, ou « Non renseigné »
+   - téléphone : ``<a :href="`tel:${brewery.phone}`">``, ou « Non renseigné »
    - site : `<a :href="brewery.website_url" target="_blank" rel="noopener noreferrer">`, ou
      « Non renseigné »
    - adresse : assembler `address_1`, `postal_code` + `city`, `state_province`, `country` en
      ignorant les champs vides (`[...].filter(Boolean).join(', ')`, comme dans `BreweryCard.vue`)
    - mise en page : deux colonnes sur desktop (infos à gauche ; à droite un lien
-     `https://www.google.com/maps?q=${latitude},${longitude}` si les coordonnées existent), une
+     ``https://www.google.com/maps?q=${latitude},${longitude}`` si les coordonnées existent), une
      colonne en dessous de 640 px
 
 Id de test qui existe : prendre l'id de n'importe quelle carte du catalogue (bouton VOIR).
@@ -179,7 +179,7 @@ export function distanceKm(a, b) {
 ```
 
 `BreweryCard` accepte déjà une prop `distance` (en km) et l'affiche en haut à droite avec une flèche :
-il suffira de passer `:distance="distanceKm(coords, { lat: +b.latitude, lng: +b.longitude })"`
+il suffira de passer ``:distance="distanceKm(coords, { lat: +b.latitude, lng: +b.longitude })"``
 depuis `BreweryList`. Attention : l'API renvoie `latitude`/`longitude` en **chaînes**, souvent `null`.
 
 La géolocalisation ne fonctionne qu'en `https` ou sur `localhost` : `npm run dev` convient.
@@ -202,7 +202,7 @@ La géolocalisation ne fonctionne qu'en `https` ou sur `localhost` : `npm run de
 3. Dans `HomeView.vue`, mettre la liste et la carte côte à côte (grille 2 colonnes : liste à gauche,
    carte collante à droite, hauteur ~ 600 px ; carte sous la liste en dessous de 1024 px), et
    ajouter le bouton « Ma position actuelle » à côté de la `SearchBar`. Au succès de `locate()` :
-   `getBreweries({ by_dist: `${lat},${lng}`, per_page: 12 })`. Afficher `geoError` en petit texte
+   ``getBreweries({ by_dist: `${lat},${lng}`, per_page: 12 })``. Afficher `geoError` en petit texte
    gris sous le bouton (pas d'`ErrorBanner`, le test demande un message discret).
 
 ---
