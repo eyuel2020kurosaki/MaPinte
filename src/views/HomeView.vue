@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import Loader from '@/components/Loader.vue'
 import ErrorBanner from '@/components/ErrorBanner.vue'
 import SearchBar from '@/components/SearchBar.vue'
+import BreweryList from '@/components/BreweryList.vue'
 import { getBreweries, searchBreweries } from '@/services/breweryService.js'
 
 const PER_PAGE = 12
@@ -84,7 +85,13 @@ onMounted(loadBreweries)
         </button>
       </div>
 
-      <!-- BreweryList.vue (US-1.1) viendra s'afficher ici avec `breweries` -->
+      <template v-else>
+        <p class="catalogue__count" role="status">
+          <strong>{{ breweries.length }}</strong>
+          {{ breweries.length > 1 ? 'brasseries trouvées' : 'brasserie trouvée' }}
+        </p>
+        <BreweryList :breweries="breweries" />
+      </template>
     </section>
   </main>
 </template>
@@ -103,6 +110,18 @@ onMounted(loadBreweries)
 
 .catalogue {
   margin-top: 24px;
+}
+
+/* Maquette : « 245 brasseries trouvées », nombre en gras, police monospace */
+.catalogue__count {
+  margin: 0 0 20px;
+  color: #0b1527;
+  font-family: ui-monospace, 'SFMono-Regular', 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+}
+
+.catalogue__count strong {
+  font-weight: 700;
 }
 
 .empty-state {
