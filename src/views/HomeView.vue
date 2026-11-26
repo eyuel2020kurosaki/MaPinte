@@ -15,6 +15,9 @@ const error = ref(null)
 const searchQuery = ref('')
 const activeQuery = ref('')
 
+// Page courante, remise à 1 à chaque nouvelle recherche (utilisée par Pagination.vue, US-1.3)
+const currentPage = ref(1)
+
 // Numéro de la dernière requête : ignore les réponses arrivées dans le désordre
 let lastRequestId = 0
 
@@ -24,9 +27,8 @@ async function loadBreweries() {
   error.value = null
   try {
     const query = activeQuery.value
-    const results = query
-      ? await searchBreweries(query, { per_page: PER_PAGE })
-      : await getBreweries({ per_page: PER_PAGE })
+    const params = { page: currentPage.value, per_page: PER_PAGE }
+    const results = query ? await searchBreweries(query, params) : await getBreweries(params)
     if (requestId === lastRequestId) breweries.value = results
   } catch {
     if (requestId !== lastRequestId) return
@@ -40,6 +42,7 @@ async function loadBreweries() {
 // Appelé par la SearchBar après le debounce (ou immédiatement avec '' via le bouton ×)
 function onSearch(query) {
   activeQuery.value = query
+  currentPage.value = 1
   loadBreweries()
 }
 
@@ -66,13 +69,15 @@ onMounted(loadBreweries)
 
       <div v-else-if="isEmpty" class="empty-state" role="status">
         <p class="empty-state__title">
-          <template v-if="activeQuery"
-            >Aucune brasserie trouvée pour « {{ activeQuery }} »</template
-          >
-          <template v-else>Aucune brasserie à afficher</template>
+          {{
+            activeQuery
+              ? 'Aucune brasserie trouvée pour cette recherche'
+              : 'Aucune brasserie à afficher'
+          }}
         </p>
         <p v-if="activeQuery" class="empty-state__hint">
-          Vérifiez l'orthographe ou essayez un autre nom, une ville…
+          « {{ activeQuery }} » ne correspond à aucune brasserie. Vérifiez l'orthographe ou essayez
+          un autre nom, une ville…
         </p>
         <button v-if="activeQuery" type="button" class="empty-state__reset" @click="resetSearch">
           Effacer la recherche
