@@ -4,6 +4,7 @@ import Loader from '@/components/Loader.vue'
 import ErrorBanner from '@/components/ErrorBanner.vue'
 import SearchBar from '@/components/SearchBar.vue'
 import BreweryList from '@/components/BreweryList.vue'
+import Pagination from '@/components/Pagination.vue'
 import { getBreweries, searchBreweries } from '@/services/breweryService.js'
 
 const PER_PAGE = 12
@@ -52,6 +53,15 @@ function resetSearch() {
   onSearch('')
 }
 
+// Une page pleine (PER_PAGE résultats) signifie qu'il peut y avoir une page suivante
+const hasNextPage = computed(() => breweries.value.length === PER_PAGE)
+
+// Appelé par Pagination.vue (@change-page) : charge la page demandée
+function onChangePage(page) {
+  currentPage.value = page
+  loadBreweries()
+}
+
 // Aucun résultat après un chargement réussi
 const isEmpty = computed(() => !isLoading.value && !error.value && breweries.value.length === 0)
 
@@ -91,6 +101,11 @@ onMounted(loadBreweries)
           {{ breweries.length > 1 ? 'brasseries trouvées' : 'brasserie trouvée' }}
         </p>
         <BreweryList :breweries="breweries" />
+        <Pagination
+          :current-page="currentPage"
+          :has-next-page="hasNextPage"
+          @change-page="onChangePage"
+        />
       </template>
     </section>
   </main>
