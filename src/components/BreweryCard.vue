@@ -112,6 +112,7 @@ const formattedDistance = computed(() =>
   display: flex;
   flex-direction: column;
   gap: 12px;
+  box-sizing: border-box;
   height: 100%;
   padding: 16px;
   border: 1px solid #e2e8f0;
